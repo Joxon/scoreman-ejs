@@ -1,5 +1,6 @@
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({exrended: false});
+var jsonParser = bodyParser.json();
 
 var mysql = require('mysql');
 var connection = mysql.createConnection({
@@ -20,7 +21,8 @@ module.exports = function(app){
     res.render('login');
   });
 
-  app.post('/login', urlencodedParser, function(req, res){
+  app.post('/login', jsonParser, function(req, res){
+    console.log(req.body);
     if(req.body.username == 'admin')              // admin
     {
       var sql = 'SELECT * FROM teacher WHERE tID = \'admin\'';
@@ -28,19 +30,25 @@ module.exports = function(app){
       connection.query(sql, function (err, result) {
         if(err){
           console.log('[SELECT ERROR] - ',err.message);
-          res.send({type: 'failed'});
+          res.send({usertype: 'failed'});
         }
         else{
-          var pwd = result[0].password;
-          if(pwd == req.body.password)
-            res.send({type: 'adm_success'});
+          if(result.length > 0){
+            var pwd = result[0].password;
+            if(pwd == req.body.password)
+              res.send({usertype: 'admin'});
+            else
+              res.send({usertype: 'failed'});
+          }
           else
-            res.send({type: 'failed'});
+            res.send({usertype: 'failed'});
         }
       });
     }
     else
     {
+      // var u_name = req.body.username;
+      // console.log(u_name);
       var f_c = req.body.username[0];
       if(f_c == 'T'){ // teacher
         var sql = 'SELECT * FROM teacher WHERE tID = \'' + req.body.username + '\'';
@@ -48,18 +56,18 @@ module.exports = function(app){
         connection.query(sql, function (err, result) {
           if(err){
             console.log('[SELECT ERROR] - ',err.message);
-            res.send({type: 'failed'});
+            res.send({usertype: 'failed'});
           }
           else{
             if(result.length > 0){
               var pwd = result[0].password;
               if(pwd == req.body.password)
-                res.send({type: 'tea_success'});
+                res.send({usertype: 'teacher'});
               else
-                res.send({type: 'failed'});
+                res.send({usertype: 'failed'});
             }
             else
-              res.send({type: 'failed'});
+              res.send({usertype: 'failed'});
           }
         });
       }
@@ -69,23 +77,23 @@ module.exports = function(app){
         connection.query(sql, function (err, result) {
           if(err){
             console.log('[SELECT ERROR] - ',err.message);
-            res.send({type: 'failed'});
+            res.send({usertype: 'failed'});
           }
           else{
             if(result.length > 0){
               var pwd = result[0].password;
               if(pwd == req.body.password)
-                res.send({type: 'stu_success'});
+                res.send({usertype: 'student'});
               else
-                res.send({type: 'failed'});
+                res.send({usertype: 'failed'});
             }
             else
-              res.send({type: 'failed'});
+              res.send({usertype: 'failed'});
           }
         });
       }
       else
-        res.send({type: 'failed'});
+        res.send({usertype: 'failed'});
     }
   });
 };
