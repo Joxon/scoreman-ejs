@@ -12,43 +12,180 @@ var data = [];
 
 module.exports = function(app){
 
-    app.get('/stu', function(req, res){
-      // student info
-      var sql = 'SELECT * FROM student WHERE sID = \'' + req.signedCookies.username + '\'';
-      // console.log(sql);
-      connection.query(sql, function (err, result) {
-        if(err){
-          console.log('[SELECT ERROR] - ',err.message);
-          return;
-        }
-        data.push({sID: result[0].sID});
-        data.push({sName: result[0].sName});
-        data.push({sex: result[0].sex});
-        data.push({classno: result[0].classno});
-        // console.log(data);
-      });
-      res.send(data);
+  app.get('/stu', function(req, res){
+    // student info
+    var sql = 'SELECT * FROM student WHERE sID = \'' + req.signedCookies.username + '\'';
+    // console.log(sql);
+    connection.query(sql, function (err, result) {
+      if(err){
+        console.log('[SELECT ERROR] - ',err.message);
+        return;
+      }
+      data.push({sID: result[0].sID});
+      data.push({sName: result[0].sName});
+      data.push({sex: result[0].sex});
+      data.push({classno: result[0].classno});
+      // console.log(data);
     });
+    res.send(data);
+  });
 
-    app.post('/stu', function(req, res){
-      // take info
-      var sql = 'SELECT * FROM take NATURAL JOIN course WHERE sID = \'' + req.signedCookies.username + '\'';
-      console.log(sql);
-      connection.query(sql, function (err, result) {
-        if(err){
-          console.log('[SELECT ERROR] - ',err.message);
-          return;
-        }
+  // app.post('/stu', function(req, res){
+  //   // take info
+  //   console.log(req.body);
+  //   var type = req.body.type;
+  //   if(type == 'sModify'){            // modify {sID :} {sName :} {classno :} {sex :} {password :}
+  //     // req.signedCookies.username
+  //     var sql = 'UPDATE student SET password = \'' + req.body.password +
+  //               '\' WHERE sID = \'' + req.body.sID + '\'';
+  //     // console.log(sql);
+  //     connection.query(sql, function (err, result) {
+  //       if(err){
+  //         console.log('[SELECT ERROR] - ',err.message);
+  //         res.json({restype: 'failed'});
+  //       }
+  //       else{
+  //         res.json({restype: 'success'});
+  //       }
+  //       // console.log(data);
+  //     });
+  //   }
+  //   else if(type == 'sSearch'){       // search {sID ; }
+  //     // var sql = 'SELECT * FROM take NATURAL JOIN course WHERE sID = \'' + req.signedCookies.username + '\'';
+  //     var sql = 'SELECT * FROM take NATURAL JOIN course WHERE sID = \'' + req.body.sID + '\'';
+  //     // console.log(sql);
+  //     connection.query(sql, function (err, result) {
+  //       if(err){
+  //         console.log('[SELECT ERROR] - ',err.message);
+  //         data = [];
+  //         temp = new Object();
+  //         temp.cID = 'error';
+  //         temp.cName = 'error';
+  //         temp.grade = 'error';
+  //         data.push(temp);
+  //         res.send(data);
+  //       }
+  //       else{
+  //         data = [];
+  //         for(var i = 0; i < result.length; i++)
+  //         {
+  //           temp = new Object();
+  //           temp.cID = result[i].cID;
+  //           temp.cName = result[i].cName;
+  //           temp.grade = result[i].grade;
+  //           data.push(temp);
+  //         }
+  //         res.send(data);
+  //       }
+  //       // console.log(data);
+  //     });
+  //   }
+  //   else if(type == 'sInfo'){       // info {sID :}
+  //     var sql = 'SELECT * FROM student WHERE sID = \'' + req.body.sID + '\'';
+  //     // console.log(sql);
+  //     connection.query(sql, function (err, result) {
+  //       if(err){
+  //         console.log('[SELECT ERROR] - ',err.message);
+  //         data = [];
+  //         temp = new Object();
+  //         temp.sID = 'error';
+  //         temp.sName = 'error';
+  //         temp.classno = 'error';
+  //         temp.sex = 'error';
+  //         data.push(temp);
+  //         res.send(data);
+  //       }
+  //       else{
+  //         temp = new Object();
+  //         temp.sID = result[0].sID;
+  //         temp.sex = result[0].sex;
+  //         temp.sName = result[0].sName;
+  //         temp.classno = result[0].classno;
+  //         res.send(temp);
+  //       }
+  //       // console.log(data);
+  //     });
+  //   }
+  //   else{
+  //     res.json({restype : 'error'});
+  //   }
+  // });
+
+  app.post('/stu', function(req, res){
+    // get student info
+    var sql = 'SELECT * FROM student WHERE sID = \'' + req.body.sID + '\'';
+    // sql = 'SELECT * FROM student WHERE sID = \'' + req.signedcookies.username + '\'';
+    // console.log(sql);
+    connection.query(sql, function (err, result) {
+      if(err){
+        console.log('[SELECT ERROR] - ',err.message);
+        data = [];
+        temp = new Object();
+        temp.sID = 'error';
+        temp.sName = 'error';
+        temp.classno = 'error';
+        temp.sex = 'error';
+        data.push(temp);
+        res.send(data);
+      }
+      else{
+        temp = new Object();
+        temp.sID = result[0].sID;
+        temp.sex = result[0].sex;
+        temp.sName = result[0].sName;
+        temp.classno = result[0].classno;
+        res.send(temp);
+      }
+      // console.log(data);
+    });
+  });
+
+  app.post('/stu/take', function(req, res){
+    // get take info
+    // var sql = 'SELECT * FROM take NATURAL JOIN course WHERE sID = \'' + req.signedCookies.username + '\'';
+    var sql = 'SELECT * FROM take NATURAL JOIN course WHERE sID = \'' + req.body.sID + '\'';
+    // console.log(sql);
+    connection.query(sql, function (err, result) {
+      if(err){
+        console.log('[SELECT ERROR] - ',err.message);
+        data = [];
+        temp = new Object();
+        temp.cID = 'error';
+        temp.cName = 'error';
+        temp.grade = 'error';
+        data.push(temp);
+        res.send(data);
+      }
+      else{
+        data = [];
         for(var i = 0; i < result.length; i++)
         {
-          temp = [];
-          temp.push({cID: result[i].cID});
-          temp.push({cName: result[i].cName});
-          temp.push({grade: result[i].grade});
+          temp = new Object();
+          temp.cID = result[i].cID;
+          temp.cName = result[i].cName;
+          temp.grade = result[i].grade;
           data.push(temp);
         }
-        console.log(data);
-      });
-      res.send(data);
-    })
+        res.send(data);
+      }
+      // console.log(data);
+    });
+  });
+
+  app.put('/stu', function(req, res){
+    // password change
+    var sql = 'UPDATE student SET password = \'' + req.body.password + '\' WHERE sID = \'' + req.body.sID + '\'';
+    // sql = 'UPDATE student SET password = \'' + req.body.password + '\' WHERE sID = \'' + req.signedcookies.username + '\'';
+    // console.log(sql);
+    connection.query(sql, function (err, result) {
+      if(err){
+        console.log('[SELECT ERROR] - ',err.message);
+        res.json({restype: 'failed'});
+      }
+      else{
+        res.json({restype: 'success'});
+      }
+      // console.log(data);
+    });
+  });
 };

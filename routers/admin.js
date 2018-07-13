@@ -36,113 +36,236 @@ module.exports = function(app){
     // res.send(data);
   });
 
+  // app.post('/admin', function(req, res){
+
+  //   var type = req.body.type;
+
+  //   if(type == 'sModify'){
+  //     var sql = 'UPDATE student SET password = \'' + req.body.password + '\', sName = \'' + req.body.sName +
+  //       '\', classno = \'' + req.body.classno + '\', sex = \'' + req.body.sex +  '\' WHERE sID = \'' + req.body.sID + '\'';
+  //     // console.log(sql);
+  //     connection.query(sql, function (err, result) {
+  //       if(err){
+  //         console.log('[SELECT ERROR] - ',err.message);
+  //         res.json({restype: 'failed'});
+  //       }
+  //       else{
+  //         res.json({restype: 'success'});
+  //       }
+  //     });
+  //   }
+  //   else if(type == 'tModify'){
+  //     var sql = 'UPDATE teacher SET password = \'' + req.body.password + '\', tName = \'' + req.body.tName +
+  //       '\', email = \'' + req.body.email + '\', sex = \'' + req.body.sex +  '\' WHERE tID = \'' + req.body.tID + '\'';
+  //     // console.log(sql);
+  //     connection.query(sql, function (err, result) {
+  //       if(err){
+  //         console.log('[SELECT ERROR] - ',err.message);
+  //         res.json({restype: 'failed'});
+  //       }
+  //       else{
+  //         res.json({restype: 'success'});
+  //       }
+  //     });
+  //   }
+  //   else if(type == 'cModify'){
+  //     var sql = 'UPDATE course SET tID = \'' + req.body.tID + '\', semester = \'' + req.body.semester +
+  //       '\', credit = \'' + req.body.credit + '\', cName = \'' + req.body.cName +  '\' WHERE cID = \'' + req.body.cID + '\'';
+  //     // console.log(sql);
+  //     connection.query(sql, function (err, result) {
+  //       if(err){
+  //         console.log('[SELECT ERROR] - ',err.message);
+  //         res.json({restype: 'failed'});
+  //       }
+  //       else{
+  //         res.json({restype: 'success'});
+  //       }
+  //     });
+  //   }
+  //   else if(type == 'sSearch'){
+  //     var sql = 'SELECT * FROM student ';
+  //     connection.query(sql, function (err, result) {
+  //       if(err){
+  //         console.log('[SELECT ERROR] - ',err.message);
+  //         data = [];
+  //         temp = new Object();
+  //         temp.sID = 'error';
+  //         temp.sName = 'error';
+  //         temp.classno = 'error';
+  //         temp.sex = 'error';
+  //         data.push(temp);
+  //         res.send(data);
+  //       }
+  //       else{
+  //         data = [];
+  //         for(var i = 0; i < result.length; i++)
+  //         {
+  //           temp = new Object();
+  //           temp.sID = result[i].sID;
+  //           temp.sName = result[i].sName;
+  //           temp.classno = result[i].classno;
+  //           temp.sex = result[i].sex;
+  //           data.push(temp);
+  //         }
+  //         res.send(data);
+  //       }
+  //       // console.log(data);
+  //     });
+  //   }
+  //   else if(type == 'tSearch'){
+  //     var sql = 'SELECT * FROM teacher WHERE tID <> \'admin\'';
+  //     connection.query(sql, function (err, result) {
+  //       if(err){
+  //         console.log('[SELECT ERROR] - ',err.message);
+  //         data = [];
+  //         temp = new Object();
+  //         temp.tID = 'error';
+  //         temp.tName = 'error';
+  //         temp.email = 'error';
+  //         temp.sex = 'error';
+  //         data.push(temp);
+  //         res.send(data);
+  //       }
+  //       else{
+  //         data = [];
+  //         for(var i = 0; i < result.length; i++)
+  //         {
+  //           temp = new Object();
+  //           temp.tID = result[i].tID;
+  //           temp.tName = result[i].tName;
+  //           temp.email = result[i].email;
+  //           temp.sex = result[i].sex;
+  //           data.push(temp);
+  //         }
+  //         res.send(data);
+  //       }
+  //       // console.log(data);
+  //     });
+  //   }
+  //   else if(type == 'cSearch'){
+  //     var sql = 'SELECT * FROM course ';
+  //     connection.query(sql, function (err, result) {
+  //       if(err){
+  //         console.log('[SELECT ERROR] - ',err.message);
+  //         data = [];
+  //         temp = new Object();
+  //         temp.cID = 'error';
+  //         temp.tID = 'error';
+  //         temp.tName = 'error';
+  //         temp.credit = 'error';
+  //         temp.semester = 'error';
+  //         data.push(temp);
+  //         res.send(data);
+  //       }
+  //       else{
+  //         data = [];
+  //         for(var i = 0; i < result.length; i++)
+  //         {
+  //           temp = new Object();
+  //           temp.cID = result[i].cID;
+  //           temp.tID = result[i].tID;
+  //           temp.tName = result[i].tName;
+  //           temp.credit = result[i].credit;
+  //           temp.semester = result[i].semester;
+  //           data.push(temp);
+  //         }
+  //         res.send(data);
+  //       }
+  //       // console.log(data);
+  //     });
+  //   }
+  //   else if(type == 'sAdd'){
+  //     var sql = 'INSERT INTO student VALUES(\'' + req.body.sID + '\', \'' + req.body.sName + '\', \'' +
+  //                 req.body.classno + '\', \'' + req.body.sex + '\', \'' + req.body.password + '\')';
+  //     connection.query(sql, function (err, result) {
+  //       if(err){
+  //         console.log('[SELECT ERROR] - ',err.message);
+  //         res.json({restype: 'failed'});
+  //       }
+  //       else
+  //         res.json({restype: 'success'});
+  //       // console.log(data);
+  //     });
+  //   }
+  //   else if(type == 'tAdd'){
+  //     var sql = 'INSERT INTO teacher VALUES(\'' + req.body.tID + '\', \'' + req.body.tName + '\', \'' +
+  //                 req.body.password + '\', \'' + req.body.sex + '\', \'' + req.body.email + '\')';
+  //     connection.query(sql, function (err, result) {
+  //       if(err){
+  //         console.log('[SELECT ERROR] - ',err.message);
+  //         res.json({restype: 'failed'});
+  //       }
+  //       else
+  //         res.json({restype: 'success'});
+  //       // console.log(data);
+  //     });
+  //   }
+  //   else if(type == 'cAdd'){
+  //     var sql = 'INSERT INTO course VALUES(\'' + req.body.cID + '\', \'' + req.body.tID + '\', \'' +
+  //                 req.body.cName + '\', \'' + req.body.credit + '\', \'' + req.body.semester + '\')';
+  //     connection.query(sql, function (err, result) {
+  //       if(err){
+  //         console.log('[SELECT ERROR] - ',err.message);
+  //         res.json({restype: 'failed'});
+  //       }
+  //       else
+  //         res.json({restype: 'success'});
+  //       // console.log(data);
+  //     });
+  //   }
+  //   // else
+  //   //   res.json({restype: 'error'})
+  // });
+
   app.post('/admin/course', function(req, res){
-    // add course info
-    // console.log(req.body);
+    // course info update
     var sql = 'INSERT INTO course VALUES(\'' + req.body.cID + '\', \'' + req.body.tID + '\', \'' +
-              req.body.cName + '\', \'' + req.body.credit + '\', \'' + req.body.semester + '\')';
-    console.log(sql);
-    connection.query(sql, function(err){
-      if(err){
-        console.log('[SELECT ERROR] - ',err.message);
-        res.send({type: 'failed'});
-        // return;
-      }
-      else 
-        res.send({type: 'success'});
-    });
-    // res.send({type: 'success'});
+                  req.body.cName + '\', \'' + req.body.credit + '\', \'' + req.body.semester + '\')';
+      connection.query(sql, function (err, result) {
+        if(err){
+          console.log('[SELECT ERROR] - ',err.message);
+          res.json({restype: 'failed'});
+        }
+        else
+          res.json({restype: 'success'});
+        // console.log(data);
+      });
   });
 
   app.post('/admin/teacher', function(req, res){
-    // add teacher info
+    // teacher info update
     var sql = 'INSERT INTO teacher VALUES(\'' + req.body.tID + '\', \'' + req.body.tName + '\', \'' +
-              req.body.password + '\', \'' + req.body.sex + '\', \'' + req.body.email + '\')';
-    console.log(sql);
-    connection.query(sql, function(err){
-      if(err){
-        console.log('[SELECT ERROR] - ',err.message);
-        res.send({type: 'failed'});
-        // return;
-      }
-      else
-        res.send({type: 'success'});
-    });
-    // res.send({type: 'success'});
+                  req.body.password + '\', \'' + req.body.sex + '\', \'' + req.body.email + '\')';
+      connection.query(sql, function (err, result) {
+        if(err){
+          console.log('[SELECT ERROR] - ',err.message);
+          res.json({restype: 'failed'});
+        }
+        else
+          res.json({restype: 'success'});
+        // console.log(data);
+      });
   });
 
   app.post('/admin/student', function(req, res){
-    // add student info
+    // teacher info delete
     var sql = 'INSERT INTO student VALUES(\'' + req.body.sID + '\', \'' + req.body.sName + '\', \'' +
-              req.body.classno + '\', \'' + req.body.sex + '\', \'' + req.body.password + '\')';
-    console.log(sql);
-    connection.query(sql, function(err){
-      if(err){
-        console.log('[SELECT ERROR] - ',err.message);
-        res.send({type: 'failed'});
-        // return;
-      }
-      else
-        res.send({type: 'success'});
-    });
-    // res.send({type: 'success'});
-  });
-
-  app.post('/admin/course/:id', function(req, res){
-    // update course info
-    // console.log(req.body)
-    var sql = 'UPDATE course SET tID = \'' + req.body.tID + '\', cName = \'' + req.body.cName + '\', credit = \'' +
-              req.body.credit + '\', semester = \'' + req.body.semester + '\' WHERE cID = \'' + req.params.id + '\'';
-    console.log(sql);
-    connection.query(sql, function(err){
-      if(err){
-        console.log('[SELECT ERROR] - ',err.message);
-        res.send({type: 'failed'});
-        // return;
-      }
-      else
-        res.send({type: 'success'});
-    });
-    // res.send({type: 'success'});
-  });
-
-  app.post('/admin/teacher/:id', function(req, res){
-    // update teacher info
-    var sql = 'UPDATE teacher SET email = \'' + req.body.email + '\', tName = \'' + req.body.tName + '\', sex = \'' +
-              req.body.sex + '\', password = \'' + req.body.password + '\' WHERE tID = \'' + req.params.id + '\'';
-    console.log(sql);
-    connection.query(sql, function(err){
-      if(err){
-        console.log('[SELECT ERROR] - ',err.message);
-        res.send({type: 'failed'});
-        // return;
-      }
-      else
-        res.send({type: 'success'});
-    });
-    // res.send({type: 'success'});
-  });
-
-  app.post('/admin/student/:id', function(req, res){
-    // update student info
-    var sql = 'UPDATE student SET classno = \'' + req.body.classno + '\', sName = \'' + req.body.sName + '\', sex = \'' +
-              req.body.sex + '\', password = \'' + req.body.password + '\' WHERE tID = \'' + req.params.id + '\'';
-    console.log(sql);
-    connection.query(sql, function(err){
-      if(err){
-        console.log('[SELECT ERROR] - ',err.message);
-        res.send({type: 'failed'});
-        // return;
-      }
-      else 
-        res.send({type: 'success'});
-    });
-    // res.send({type: 'success'});
+                  req.body.classno + '\', \'' + req.body.sex + '\', \'' + req.body.password + '\')';
+      connection.query(sql, function (err, result) {
+        if(err){
+          console.log('[SELECT ERROR] - ',err.message);
+          res.json({restype: 'failed'});
+        }
+        else
+          res.json({restype: 'success'});
+        // console.log(data);
+      });
   });
 
   app.delete('/admin/course/:id', function(req, res){
     // delete courese info
     var re_flag = 1;
+    // delete course
     var sql = 'DELETE FROM course WHERE cID = \'' + req.params.id + '\'';
     console.log(sql);
     connection.query(sql, function(err){
@@ -155,8 +278,8 @@ module.exports = function(app){
       // else
       //   res.send({type: 'success'});
     });
-
-    var sql = 'DELETE FROM take WHERE cID = \'' + req.params.id + '\'';
+    // delete take
+    sql = 'DELETE FROM take WHERE cID = \'' + req.params.id + '\'';
     console.log(sql);
     connection.query(sql, function(err){
       if(err){
@@ -174,23 +297,132 @@ module.exports = function(app){
 
   app.delete('/admin/teacher/:id', function(req, res){
     // delete teacher info
-    var sql = 'DELETE FROM teacher WHERE tID = \'' + req.params.id + '\'';
+    var re_flag = 1;
+    // delete take 
+    var t_cid;
+    var sql = 'SELECT cID FROM course WHERE tID = \'' + req.params.id + '\'';
+    // console.log(sql);
+    connection.query(sql, function(err){
+      if(err){
+        console.log('[SELECT ERROR] - ',err.message);
+        // res.send({type: 'failed'});
+        re_flag = 0;
+        // return;
+      }
+      else
+        t_cid = result[0].cID;
+    });
+    sql = 'DELETE FROM take WHERE cID = \'' + t_cid + '\'';
     console.log(sql);
     connection.query(sql, function(err){
       if(err){
         console.log('[SELECT ERROR] - ',err.message);
-        res.send({type: 'failed'});
+        // res.send({type: 'failed'});
+        re_flag = 0;
         // return;
       }
-      else
-        res.send({type: 'success'});
     });
+    // delete course
+    sql = 'DELETE FROM course WHERE tID = \'' + req.params.id + '\'';
+    console.log(sql);
+    connection.query(sql, function(err){
+      if(err){
+        console.log('[SELECT ERROR] - ',err.message);
+        // res.send({type: 'failed'});
+        re_flag = 0;
+        // return;
+      }
+    });
+    // delete teacher
+    sql = 'DELETE FROM teacher WHERE tID = \'' + req.params.id + '\'';
+    console.log(sql);
+    connection.query(sql, function(err){
+      if(err){
+        console.log('[SELECT ERROR] - ',err.message);
+        // res.send({type: 'failed'});
+        re_flag = 0;
+        // return;
+      }
+      // else
+      //   res.send({type: 'success'});
+    });
+    if(re_flag)
+        res.send({type: 'failed'});
+    else
+      res.send({type: 'success'});
     // res.send({type: 'success'});
   });
 
   app.delete('/admin/student/:id', function(req, res){
     // delete student info
+    var re_flag = 1;
+    // delete student
     var sql = 'DELETE FROM student WHERE sID = \'' + req.params.id + '\'';
+    console.log(sql);
+    connection.query(sql, function(err){
+      if(err){
+        console.log('[SELECT ERROR] - ',err.message);
+        // res.send({type: 'failed'});
+        re_flag = 0;
+        // return;
+      }
+      // else
+      //   res.send({type: 'success'});
+    });
+    // delete take
+    sql = 'DELETE FROM take WHERE sID = \'' + req.params.id + '\'';
+    console.log(sql);
+    connection.query(sql, function(err){
+      if(err){
+        console.log('[SELECT ERROR] - ',err.message);
+        // res.send({type: 'failed'});
+        re_flag = 0;
+        // return;
+      }
+    });
+    if(re_flag)
+        res.send({type: 'failed'});
+    else
+      res.send({type: 'success'});
+  });
+
+  app.put('/admin/course/:id', function(req, res){
+    // update course info
+    // console.log(req.body)
+    var sql = 'UPDATE course SET tID = \'' + req.body.tID + '\', cName = \'' + req.body.cName + '\', credit = \'' +
+              req.body.credit + '\', semester = \'' + req.body.semester + '\' WHERE cID = \'' + req.params.id + '\'';
+    // console.log(sql);
+    connection.query(sql, function (err, result) {
+      if(err){
+        console.log('[SELECT ERROR] - ',err.message);
+        res.json({restype: 'failed'});
+      }
+      else{
+        res.json({restype: 'success'});
+      }
+    });
+  });
+
+  app.put('/admin/teacher/:id', function(req, res){
+    // update teacher info
+    var sql = 'UPDATE teacher SET email = \'' + req.body.email + '\', tName = \'' + req.body.tName + '\', sex = \'' +
+              req.body.sex + '\', password = \'' + req.body.password + '\' WHERE tID = \'' + req.params.id + '\'';
+    console.log(sql);
+    connection.query(sql, function(err){
+      if(err){
+        console.log('[SELECT ERROR] - ',err.message);
+        res.json({type: 'failed'});
+        // return;
+      }
+      else
+        res.json({type: 'success'});
+    });
+  });
+
+  app.put('/admin/student/:id', function(req, res){
+    // update student info
+    var sql = 'UPDATE student SET classno = \'' + req.body.classno + '\', sName = \'' + req.body.sName + '\', sex = \'' +
+              req.body.sex + '\', password = \'' + req.body.password + '\' WHERE tID = \'' + req.params.id + '\'';
     console.log(sql);
     connection.query(sql, function(err){
       if(err){
@@ -198,11 +430,107 @@ module.exports = function(app){
         res.send({type: 'failed'});
         // return;
       }
-      else
+      else 
         res.send({type: 'success'});
     });
-    // res.send({type: 'success'});
   });
-  
+
+  app.post('/admin', function(req, res){
+    // all info
+    // student info
+    var tdata = [];
+    var sql = 'SELECT * FROM student ';
+    connection.query(sql, function (err, result) {
+      if(err){
+        console.log('[SELECT ERROR] - ',err.message);
+        data = [];
+        temp = new Object();
+        temp.sID = 'error';
+        temp.sName = 'error';
+        temp.classno = 'error';
+        temp.sex = 'error';
+        tdata.push(temp);
+        data.push(tdata);
+        // res.send(data);
+      }
+      else{
+        data = [];
+        for(var i = 0; i < result.length; i++)
+        {
+          temp = new Object();
+          temp.sID = result[i].sID;
+          temp.sName = result[i].sName;
+          temp.classno = result[i].classno;
+          temp.sex = result[i].sex;
+          tdata.push(temp);
+        }
+        // res.send(data);
+        data.push(tdata);
+      }
+    });
+
+    sql = 'SELECT * FROM teacher WHERE tID <> \'admin\'';
+    connection.query(sql, function (err, result) {
+      if(err){
+        console.log('[SELECT ERROR] - ',err.message);
+        tdata = [];
+        temp = new Object();
+        temp.tID = 'error';
+        temp.tName = 'error';
+        temp.email = 'error';
+        temp.sex = 'error';
+        tdata.push(temp);
+        // res.send(data);
+        data.push(tdata);
+      }
+      else{
+        tdata = [];
+        for(var i = 0; i < result.length; i++)
+        {
+          temp = new Object();
+          temp.tID = result[i].tID;
+          temp.tName = result[i].tName;
+          temp.email = result[i].email;
+          temp.sex = result[i].sex;
+          tdata.push(temp);
+        }
+        // res.send(data);
+        data.push(tdata);
+      }
+    });
+
+
+    var sql = 'SELECT * FROM course ';
+    connection.query(sql, function (err, result) {
+      if(err){
+        console.log('[SELECT ERROR] - ',err.message);
+        tdata = [];
+        temp = new Object();
+        temp.cID = 'error';
+        temp.tID = 'error';
+        temp.tName = 'error';
+        temp.credit = 'error';
+        temp.semester = 'error';
+        tdata.push(temp);
+        data.push(tdata);
+        res.send(data);
+      }
+      else{
+        tdata = [];
+        for(var i = 0; i < result.length; i++)
+        {
+          temp = new Object();
+          temp.cID = result[i].cID;
+          temp.tID = result[i].tID;
+          temp.tName = result[i].tName;
+          temp.credit = result[i].credit;
+          temp.semester = result[i].semester;
+          tdata.push(temp);
+        }
+        data.push(tdata);
+        res.send(data);
+      }
+    });
+  });
 };
 // connection.end();

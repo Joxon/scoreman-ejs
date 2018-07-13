@@ -27,14 +27,14 @@ app.use(session({
   }
 }));
 
-app.use(function (req, res, next){
-  var url = req.originalUrl;
-  if (url != '/login' && !req.session.user) {
-    // res.status(500).json({ error: 'message' });
-    return res.redirect('/login');
-  }
-  next();
-});
+// app.use(function (req, res, next){
+//   var url = req.originalUrl;
+//   if (url != '/login' && !req.session.user) {
+//     // res.status(500).json({ error: 'message' });
+//     return res.redirect('/login');
+//   }
+//   next();
+// });
 
 app.all('*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");

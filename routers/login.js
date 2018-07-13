@@ -30,18 +30,22 @@ module.exports = function(app){
       connection.query(sql, function (err, result) {
         if(err){
           console.log('[SELECT ERROR] - ',err.message);
-          res.send({usertype: 'failed'});
+          res.json({usertype: 'failed'});
         }
         else{
           if(result.length > 0){
             var pwd = result[0].password;
             if(pwd == req.body.password)
-              res.send({usertype: 'admin'});
+            {
+              res.cookie('username', req.body.username, {signed: true});
+              req.session.user = req.body.username;
+              res.json({usertype: 'admin'});
+            }
             else
-              res.send({usertype: 'failed'});
+              res.json({usertype: 'failed'});
           }
           else
-            res.send({usertype: 'failed'});
+            res.json({usertype: 'failed'});
         }
       });
     }
@@ -56,18 +60,22 @@ module.exports = function(app){
         connection.query(sql, function (err, result) {
           if(err){
             console.log('[SELECT ERROR] - ',err.message);
-            res.send({usertype: 'failed'});
+            res.json({usertype: 'failed'});
           }
           else{
             if(result.length > 0){
               var pwd = result[0].password;
               if(pwd == req.body.password)
-                res.send({usertype: 'teacher'});
+              {
+                res.cookie('username', req.body.username, {signed: true});
+                req.session.user = req.body.username;
+                res.json({usertype: 'teacher'});
+              }
               else
-                res.send({usertype: 'failed'});
+                res.json({usertype: 'failed'});
             }
             else
-              res.send({usertype: 'failed'});
+              res.json({usertype: 'failed'});
           }
         });
       }
@@ -77,23 +85,27 @@ module.exports = function(app){
         connection.query(sql, function (err, result) {
           if(err){
             console.log('[SELECT ERROR] - ',err.message);
-            res.send({usertype: 'failed'});
+            res.json({usertype: 'failed'});
           }
           else{
             if(result.length > 0){
               var pwd = result[0].password;
               if(pwd == req.body.password)
-                res.send({usertype: 'student'});
+              {  
+                res.cookie('username', req.body.username, {signed: true});
+                req.session.user = req.body.username;
+                res.json({usertype: 'student'});
+              }
               else
-                res.send({usertype: 'failed'});
+                res.json({usertype: 'failed'});
             }
             else
-              res.send({usertype: 'failed'});
+              res.json({usertype: 'failed'});
           }
         });
       }
       else
-        res.send({usertype: 'failed'});
+        res.json({usertype: 'failed'});
     }
   });
 };
