@@ -5,8 +5,8 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'jiaxiran',
-    database: 'stu_grade_manage'
+    password: '123456',
+    database: 'stu_grade'
 });
 
 var mInfo = [];
