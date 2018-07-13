@@ -18,7 +18,7 @@ module.exports = function(app){
   // });
   
   app.get('/login', function(req, res){
-    res.render('login');
+    res.render('index.html');
   });
 
   app.post('/login', function(req, res){

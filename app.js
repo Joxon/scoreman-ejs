@@ -12,7 +12,9 @@ var tea = require('./routers/tea');
 
 var app = express();
 
-app.set('view engine', 'ejs');
+app.engine('.html', require('ejs').__express);
+app.set('view engine', 'html');
+// app.set('view engine', 'ejs');
 app.use(cookieParser('my_cookie_secret'));
 app.use(express.static('./public'));
 app.use(cookieParser());
@@ -27,15 +29,22 @@ app.use(session({
   }
 }));
 
-// app.use(function (req, res, next){
-//   var url = req.originalUrl;
-//   if (url != '/login' && !req.session.user) {
-//     // res.status(500).json({ error: 'message' });
-//     return res.redirect('/login');
-//   }
-//   next();
-// });
+// 登陆拦截：
+app.use(function (req, res, next){
+  var url = req.originalUrl;
+  if (url != '/login' && !req.session.user) {
+    // res.status(500).json({ error: 'message' });
+    return res.redirect('/login');
+  }
+  next();
+});
 
+// 跨域问题解决方法
+// app.use(cors({
+//   origin:['http://localhost:8080'],
+//   methods:['GET','POST'],
+//   alloweHeaders:['Content-Type', 'Authorization']
+// }));
 app.all('*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type");
