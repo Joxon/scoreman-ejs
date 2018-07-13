@@ -1,6 +1,6 @@
-var bodyParser = require('body-parser');
-var urlencodedParser = bodyParser.urlencoded({exrended: false});
-var jsonParser = bodyParser.json();
+// var bodyParser = require('body-parser');
+// var urlencodedParser = bodyParser.urlencoded({exrended: false});
+// var jsonParser = bodyParser.json();
 
 var mysql = require('mysql');
 var connection = mysql.createConnection({
@@ -21,7 +21,7 @@ module.exports = function(app){
     res.render('login');
   });
 
-  app.post('/login', jsonParser, function(req, res){
+  app.post('/login', function(req, res){
     console.log(req.body);
     if(req.body.username == 'admin')              // admin
     {

@@ -1,5 +1,5 @@
-var bodyParser = require('body-parser');
-var urlencodedParser = bodyParser.urlencoded({exrended: false});
+// var bodyParser = require('body-parser');
+// var urlencodedParser = bodyParser.urlencoded({exrended: false});
 
 var mysql = require('mysql');
 var connection = mysql.createConnection({
@@ -36,7 +36,7 @@ module.exports = function(app){
     // res.send(data);
   });
 
-  app.post('/admin/course', urlencodedParser, function(req, res){
+  app.post('/admin/course', function(req, res){
     // add course info
     // console.log(req.body);
     var sql = 'INSERT INTO course VALUES(\'' + req.body.cID + '\', \'' + req.body.tID + '\', \'' +
@@ -54,7 +54,7 @@ module.exports = function(app){
     // res.send({type: 'success'});
   });
 
-  app.post('/admin/teacher', urlencodedParser, function(req, res){
+  app.post('/admin/teacher', function(req, res){
     // add teacher info
     var sql = 'INSERT INTO teacher VALUES(\'' + req.body.tID + '\', \'' + req.body.tName + '\', \'' +
               req.body.password + '\', \'' + req.body.sex + '\', \'' + req.body.email + '\')';
@@ -71,7 +71,7 @@ module.exports = function(app){
     // res.send({type: 'success'});
   });
 
-  app.post('/admin/student', urlencodedParser, function(req, res){
+  app.post('/admin/student', function(req, res){
     // add student info
     var sql = 'INSERT INTO student VALUES(\'' + req.body.sID + '\', \'' + req.body.sName + '\', \'' +
               req.body.classno + '\', \'' + req.body.sex + '\', \'' + req.body.password + '\')';
@@ -88,7 +88,7 @@ module.exports = function(app){
     // res.send({type: 'success'});
   });
 
-  app.post('/admin/course/:id', urlencodedParser, function(req, res){
+  app.post('/admin/course/:id', function(req, res){
     // update course info
     // console.log(req.body)
     var sql = 'UPDATE course SET tID = \'' + req.body.tID + '\', cName = \'' + req.body.cName + '\', credit = \'' +
@@ -106,7 +106,7 @@ module.exports = function(app){
     // res.send({type: 'success'});
   });
 
-  app.post('/admin/teacher/:id', urlencodedParser, function(req, res){
+  app.post('/admin/teacher/:id', function(req, res){
     // update teacher info
     var sql = 'UPDATE teacher SET email = \'' + req.body.email + '\', tName = \'' + req.body.tName + '\', sex = \'' +
               req.body.sex + '\', password = \'' + req.body.password + '\' WHERE tID = \'' + req.params.id + '\'';
@@ -123,7 +123,7 @@ module.exports = function(app){
     // res.send({type: 'success'});
   });
 
-  app.post('/admin/student/:id', urlencodedParser, function(req, res){
+  app.post('/admin/student/:id', function(req, res){
     // update student info
     var sql = 'UPDATE student SET classno = \'' + req.body.classno + '\', sName = \'' + req.body.sName + '\', sex = \'' +
               req.body.sex + '\', password = \'' + req.body.password + '\' WHERE tID = \'' + req.params.id + '\'';
@@ -140,7 +140,7 @@ module.exports = function(app){
     // res.send({type: 'success'});
   });
 
-  app.delete('/admin/course/:id', urlencodedParser, function(req, res){
+  app.delete('/admin/course/:id', function(req, res){
     // delete courese info
     var re_flag = 1;
     var sql = 'DELETE FROM course WHERE cID = \'' + req.params.id + '\'';
@@ -172,7 +172,7 @@ module.exports = function(app){
       res.send({type: 'success'});
   });
 
-  app.delete('/admin/teacher/:id', urlencodedParser, function(req, res){
+  app.delete('/admin/teacher/:id', function(req, res){
     // delete teacher info
     var sql = 'DELETE FROM teacher WHERE tID = \'' + req.params.id + '\'';
     console.log(sql);
@@ -188,7 +188,7 @@ module.exports = function(app){
     // res.send({type: 'success'});
   });
 
-  app.delete('/admin/student/:id', urlencodedParser, function(req, res){
+  app.delete('/admin/student/:id', function(req, res){
     // delete student info
     var sql = 'DELETE FROM student WHERE sID = \'' + req.params.id + '\'';
     console.log(sql);

@@ -1,6 +1,9 @@
 var express = require('express');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var bodyParser = require('body-parser');
+// var urlencodedParser = bodyParser.urlencoded({exrended: false});
+// var jsonParser = bodyParser.json();
 
 var login = require('./routers/login');
 var admin = require('./routers/admin');
@@ -13,6 +16,8 @@ app.set('view engine', 'ejs');
 app.use(cookieParser('my_cookie_secret'));
 app.use(express.static('./public'));
 app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({exrended: false}));
 app.use(session({
   secret: '123',            // 用来对session id相关的cookie进行签名
   saveUninitialized: false, // 是否自动保存未初始化的会话，建议false

@@ -1,6 +1,6 @@
-var bodyParser = require('body-parser');
-var urlencodedParser = bodyParser.urlencoded({exrended: false});
-var jsonParser = bodyParser.json();
+// var bodyParser = require('body-parser');
+// var urlencodedParser = bodyParser.urlencoded({exrended: false});
+// var jsonParser = bodyParser.json();
 var mysql = require('mysql');
 var connection = mysql.createConnection({
     host: 'localhost',
@@ -41,7 +41,7 @@ module.exports = function (app) {
         });
     });
 
-    app.post('/tea/myInfo', urlencodedParser, function (req, res) {
+    app.post('/tea/myInfo', function (req, res) {
         mInfo = [];
         var sql = 'select * from teacher where tID = "' + req.cookies.authorized + '"';
         connection.query(sql, function (err, result) {
@@ -64,7 +64,7 @@ module.exports = function (app) {
         });
     });
 
-    app.post('/tea/getGradeBySID', urlencodedParser, function (req, res) {
+    app.post('/tea/getGradeBySID', function (req, res) {
         sInfo = [];
         var sql = 'select * from take natural join student natural join course ' +
             'where tID = "' + req.cookies.authorized +
@@ -95,7 +95,7 @@ module.exports = function (app) {
         });
     });
 
-    app.post('/tea/getGradeByCID', urlencodedParser, function (req, res) {
+    app.post('/tea/getGradeByCID', function (req, res) {
         sInfo = [];
         var sql = 'select * from take natural join student natural join course ' +
             'where tID = "' + req.cookies.authorized +
@@ -126,7 +126,7 @@ module.exports = function (app) {
         });
     });
 
-    app.post('/tea/editGrade', urlencodedParser, function (req, res) {
+    app.post('/tea/editGrade', function (req, res) {
         var sql = 'select * from course natural join take where tID = "' + req.cookies.authorized +
             '" and sID = "' + req.body.sID +
             '" and cID = "' + req.body.cID + '"';
@@ -157,7 +157,7 @@ module.exports = function (app) {
         });
     });
 
-    app.post('/tea/newGrade', urlencodedParser, function (req, res) {
+    app.post('/tea/newGrade', function (req, res) {
         var sql = 'select * from take where sID = "' + req.body.sID +
             '" and cID = "' + req.body.cID + '"';
         connection.query(sql, function (err, result) {

@@ -1,5 +1,5 @@
-var bodyParser = require('body-parser');
-var urlencodedParser = bodyParser.urlencoded({exrended: false});
+// var bodyParser = require('body-parser');
+// var urlencodedParser = bodyParser.urlencoded({exrended: false});
 
 var mysql = require('mysql');
 var connection = mysql.createConnection({
