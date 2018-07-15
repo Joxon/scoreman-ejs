@@ -57,6 +57,91 @@ admin(app);
 stu(app);
 tea(app);
 
+app.put('/password', function(req, res){
+  var name = req.body.username;
+  if(name[0] == 'T' || name == 'admin'){
+    // password judge
+    var re_flag = 1;
+    var sql = 'SELECT password FROM teacher WHERE tID = \'' + req.body.sID +'\'';
+    connection.query(sql, function (err, result) {
+      if(err){
+        console.log('[SELECT ERROR] - ',err.message);
+        // res.json({restype: 'failed'});
+        re_flag = 0;
+      }
+      else{
+        // res.json({restype: 'success'});
+        if(result.length > 0){
+          var pwd = result[0].password;
+          if(pwd != req.body.password_old)
+            re_flag = 0;
+        }
+        else{
+          re_flag = 0;
+        }
+      }
+    });
+    if(re_flag){
+      sql = 'UPDATE teacher SET password = \'' + req.body.password_new + '\' WHERE tID = \'' + req.body.sID +'\'';
+      // console.log(sql);
+      connection.query(sql, function (err, result) {
+        if(err){
+          console.log('[SELECT ERROR] - ',err.message);
+          res.json({restype: 'failed'});
+        }
+        else{
+          res.json({restype: 'success'});
+        }
+        // console.log(data);
+      });
+    }
+    else{
+      res.json({restype: 'failed'});
+    }
+  }
+  else if(name[0] == 'S'){
+    // password judge
+    var re_flag = 1;
+    var sql = 'SELECT password FROM student WHERE sID = \'' + req.body.sID +'\'';
+    connection.query(sql, function (err, result) {
+      if(err){
+        console.log('[SELECT ERROR] - ',err.message);
+        // res.json({restype: 'failed'});
+        re_flag = 0;
+      }
+      else{
+        // res.json({restype: 'success'});
+        if(result.length > 0){
+          var pwd = result[0].password;
+          if(pwd != req.body.password_old)
+            re_flag = 0;
+        }
+        else{
+          re_flag = 0;
+        }
+      }
+    });
+    if(re_flag){
+      sql = 'UPDATE student SET password = \'' + req.body.password_new + '\' WHERE sID = \'' + req.body.sID + '\'';
+      // sql = 'UPDATE student SET password = \'' + req.body.password + '\' WHERE sID = \'' + req.signedcookies.username + '\'';
+      // console.log(sql);
+      connection.query(sql, function (err, result) {
+        if(err){
+          console.log('[SELECT ERROR] - ',err.message);
+          res.json({restype: 'failed'});
+        }
+        else{
+          res.json({restype: 'success'});
+        }
+        // console.log(data);
+      });
+    }
+    else{
+      res.json({restype: 'failed'});
+    }
+  }
+});
+
 app.listen(3000);
 
 console.log('Listening to port 3000');

@@ -14,27 +14,27 @@ var data = [];
 
 module.exports = function(app){
 
-  app.get('/admin', function(req, res){       // 待修改 分为 /admin/course ....  使用get
-    // send info_message
-    connection.query('SELECT * FROM teacher',function (err, result) {
-      if(err){
-        console.log('[SELECT ERROR] - ',err.message);
-        return;
-      }
-      for(var i = 0; i < result.length; i++)
-      {
-        var temp = [];
-        temp.push({tID: result[i].tID});
-        temp.push({tName: result[i].tName});
-        temp.push({sex: result[i].sex});
-        temp.push({email: result[i].email});
-        data.push(temp);
-      }
-      // console.log(data);
-    });
-    res.render('admin', {info: data});
-    // res.send(data);
-  });
+  // app.get('/admin', function(req, res){       // 待修改 分为 /admin/course ....  使用get
+  //   // send info_message
+  //   connection.query('SELECT * FROM teacher',function (err, result) {
+  //     if(err){
+  //       console.log('[SELECT ERROR] - ',err.message);
+  //       return;
+  //     }
+  //     for(var i = 0; i < result.length; i++)
+  //     {
+  //       var temp = [];
+  //       temp.push({tID: result[i].tID});
+  //       temp.push({tName: result[i].tName});
+  //       temp.push({sex: result[i].sex});
+  //       temp.push({email: result[i].email});
+  //       data.push(temp);
+  //     }
+  //     // console.log(data);
+  //   });
+  //   res.render('admin', {info: data});
+  //   // res.send(data);
+  // });
 
   // app.post('/admin', function(req, res){
 
