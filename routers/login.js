@@ -39,6 +39,7 @@ module.exports = function(app){
             {
               res.cookie('username', req.body.username, {signed: true});
               req.session.user = req.body.username;
+              // console.log(req.session.user);
               res.json({usertype: 'admin'});
             }
             else
