@@ -22,10 +22,10 @@ module.exports = function (app) {
             if (err) {
                 console.log('[SELECT ERROR] - ', err.message);
                 // res.render('tea', {courseInfo: ['错误']});
-                res.json({type: 'failed'});
+                res.send({type: 'failed'});
             } else if (result.length === 0) {
                 // res.render('tea', {courseInfo: ['无']});
-                res.json({type: 'failed'});
+                res.send({type: 'failed'});
             } else {
                 for (var i = 0; i < result.length; i++) {
                     var temp = [];
@@ -36,28 +36,28 @@ module.exports = function (app) {
                     cInfo.push(temp);
                 }
                 // res.render('tea', {courseInfo: cInfo});
-                res.json({type: 'success'});
+                res.send(cInfo);
             }
         });
     });
 
-    app.post('/tea/tIDmodify', urlencodedParser, function (req, res) {
-        var sql = 'update teacher set ' +
-            'tID = "' + req.body.tID + '", ' +
-            'tName = "' + req.body.tName + '", ' +
-            'password = "' + req.body.password + '", ' +
-            'sex = "' + req.body.sex + '", ' +
-            'email = "' + req.body.email + '"';
-        console.log(sql);
-        connection.query(sql, function (err) {
-            if (err) {
-                console.log('[UPDATE ERROR] - ', err.message);
-                res.json({type: 'failed'});
-            } else {
-                res.json({type: 'success'});
-            }
-        });
-    });
+    // app.post('/tea/tIDmodify', urlencodedParser, function (req, res) {
+    //     var sql = 'update teacher set ' +
+    //         'tID = "' + req.body.tID + '", ' +
+    //         'tName = "' + req.body.tName + '", ' +
+    //         'password = "' + req.body.password + '", ' +
+    //         'sex = "' + req.body.sex + '", ' +
+    //         'email = "' + req.body.email + '"';
+    //     console.log(sql);
+    //     connection.query(sql, function (err) {
+    //         if (err) {
+    //             console.log('[UPDATE ERROR] - ', err.message);
+    //             res.json({type: 'failed'});
+    //         } else {
+    //             res.json({type: 'success'});
+    //         }
+    //     });
+    // });
 
     app.post('/tea/getGradeBySID', urlencodedParser, function (req, res) {
         sInfo = [];
@@ -68,10 +68,10 @@ module.exports = function (app) {
             if (err) {
                 console.log('[SELECT ERROR] - ', err.message);
                 // res.render('tea', {gradeInfo: ['错误']});
-                res.json({type: 'failed'});
+                res.send({type: 'failed'});
             } else if (result.length === 0) {
                 // res.render('tea', {gradeInfo: ['无']});
-                res.json({type: 'failed'});
+                res.send({type: 'failed'});
             } else {
                 for (var i = 0; i < result.length; i++) {
                     var temp = [];
@@ -85,7 +85,7 @@ module.exports = function (app) {
                     sInfo.push(temp);
                 }
                 // res.render('tea', {gradeInfo: sInfo});
-                res.json({type: 'success'});
+                res.send({type: 'success'});
             }
         });
     });
@@ -99,10 +99,10 @@ module.exports = function (app) {
             if (err) {
                 console.log('[SELECT ERROR] - ', err.message);
                 // res.render('tea', {gradeInfo: ['错误']});
-                res.json({type: 'failed'});
+                res.send({type: 'failed'});
             } else if (result.length === 0) {
                 // res.render('tea', {gradeInfo: ['无']});
-                res.json({type: 'failed'});
+                res.send({type: 'failed'});
             } else {
                 for (var i = 0; i < result.length; i++) {
                     var temp = [];
@@ -116,7 +116,7 @@ module.exports = function (app) {
                     sInfo.push(temp);
                 }
                 // res.render('tea', {gradeInfo: sInfo});
-                res.json({type: 'success'});
+                res.send({type: 'success'});
             }
         });
     });
@@ -128,11 +128,11 @@ module.exports = function (app) {
         connection.query(sql, function (err, result) {
             if (err) {
                 console.log('[SELECT ERROR] - ', err.message);
-                res.json({type: 'failed'});
+                res.send({type: 'failed'});
                 // res.json(错误1);
             } else if (result.length === 0) {
                 console.log('没有选了这门课的这个学生');
-                res.json({type: 'failed'});
+                res.send({type: 'failed'});
                 // res.json('没有');
             } else {
                 sql = 'update take set grade = ' + req.body.newScore +
@@ -142,10 +142,10 @@ module.exports = function (app) {
                 connection.query(sql, function (err) {
                     if (err) {
                         console.log('[SELECT ERROR] - ', err.message);
-                        res.json({type: 'failed'});
+                        res.send({type: 'failed'});
                         // res.json('错误2');
                     } else {
-                        res.json({type: 'success'});
+                        res.send({type: 'success'});
                     }
                 });
             }
@@ -158,10 +158,10 @@ module.exports = function (app) {
         connection.query(sql, function (err, result) {
             if (err) {
                 console.log('[SELECT ERROR] - ', err.message);
-                res.json({type: 'failed'});
+                res.send({type: 'failed'});
             } else if (result.length !== 0) {
                 console.log('已经有了');
-                res.json({type: 'failed'});
+                res.send({type: 'failed'});
             } else {
                 sql = 'insert into take values("' + req.body.sID +
                     '", "' + req.body.cID +
@@ -170,9 +170,9 @@ module.exports = function (app) {
                 connection.query(sql, function (err) {
                     if (err) {
                         console.log('[SELECT ERROR] - ', err.message);
-                        res.json({type: 'failed'});
+                        res.send({type: 'failed'});
                     } else {
-                        res.json({type: 'success'});
+                        res.send({type: 'success'});
                     }
                 });
             }
@@ -186,9 +186,9 @@ module.exports = function (app) {
         connection.query(sql, function (err) {
             if (err) {
                 console.log('[SELECT ERROR] - ', err.message);
-                res.json({type: 'failed'});
+                res.send({type: 'failed'});
             } else {
-                res.json({type: 'success'});
+                res.send({type: 'success'});
             }
         });
     });
@@ -200,9 +200,9 @@ module.exports = function (app) {
         connection.query(sql, function (err) {
             if (err) {
                 console.log('[SELECT ERROR] - ', err.message);
-                res.json({type: 'failed'});
+                res.send({type: 'failed'});
             } else {
-                res.json({type: 'success'});
+                res.send({type: 'success'});
             }
         });
     });
