@@ -30,14 +30,14 @@ app.use(session({
 }));
 
 // 登陆拦截：
-app.use(function (req, res, next){
-  var url = req.originalUrl;
-  if (url != '/login' && !req.session.user) {
-    // res.status(500).json({ error: 'message' });
-    return res.redirect('/login');
-  }
-  next();
-});
+// app.use(function (req, res, next){
+//   var url = req.originalUrl;
+//   if (url != '/login' && !req.session.user) {
+//     // res.status(500).json({ error: 'message' });
+//     return res.redirect('/login');
+//   }
+//   next();
+// });
 
 // 跨域问题解决方法
 // app.use(cors({
@@ -55,6 +55,7 @@ app.all('*', function(req, res, next) {
 login(app);
 admin(app);
 stu(app);
+tea(app);
 
 app.listen(3000);
 
