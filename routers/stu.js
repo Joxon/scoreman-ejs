@@ -41,7 +41,7 @@ module.exports = function(app){
   app.post('/stu/take', function(req, res){
     // get take info
     // var sql = 'SELECT * FROM take NATURAL JOIN course WHERE sID = \'' + req.signedCookies.username + '\'';
-    // console.log(req.body);
+    console.log(req.body);
     var sql = 'SELECT * FROM take NATURAL JOIN course WHERE sID = \'' + req.body.sID + '\'';
     // console.log(sql);
     connection.query(sql, function (err, result) {
@@ -66,6 +66,7 @@ module.exports = function(app){
           data.push(temp);
         }
         res.send(data);
+        console.log(data);
       }
       // console.log(data);
     });
