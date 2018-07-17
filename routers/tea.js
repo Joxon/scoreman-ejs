@@ -146,18 +146,9 @@ module.exports = function (app) {
         connection.query(sql, function (err, result) {
             if (err) {
                 console.log('[SELECT ERROR] - ', err.message);
-                res.end();
             } else if (result.length === 0) {
                 console.log('无');
-                res.end();
             } else {
-                var dic = {
-                    'above90': 0,
-                    'above80': 0,
-                    'above70': 0,
-                    'above60': 0,
-                    'others': 0
-                };
                 for (var i = 0; i < result.length; i++) {
                     var temp = new Object();
                     temp.sID = result[i].sID;
@@ -167,26 +158,16 @@ module.exports = function (app) {
                     temp.cID = result[i].cID;
                     temp.cName = result[i].cName;
                     temp.grade = result[i].grade;
-                    if (result[i].grade >= 90) {
-                        dic['above90']++;
-                    } else if (result[i].grade >= 80) {
-                        dic['above80']++;
-                    } else if (result[i].grade >= 70) {
-                        dic['above70']++;
-                    } else if (result[i].grade >= 60) {
-                        dic['above60']++;
-                    } else {
-                        dic['others']++;
-                    }
                     gInfo.push(temp);
                 }
-                res.send(gInfo);
             }
+            res.send(gInfo);
         });
     });
 
     app.get('/tea/pic', function (req, res) {
         console.log(req.query);
+        var info = [0, 0, 0, 0, 0];
         var sql = 'select grade from take natural join student natural join course ' +
             'where tID = "' + req.query.tID +
             '" and cID = "' + req.query.cID + '"';
@@ -194,33 +175,24 @@ module.exports = function (app) {
         connection.query(sql, function (err, result) {
             if (err) {
                 console.log('[SELECT ERROR] - ', err.message);
-                res.send('查询错误');
             } else if (result.length === 0) {
                 console.log('无');
-                res.send('数据错误');
             } else {
-                var dic = {
-                    'above90': 0,
-                    'above80': 0,
-                    'above70': 0,
-                    'above60': 0,
-                    'others': 0
-                };
                 for (var i = 0; i < result.length; i++) {
                     if (result[i].grade >= 90) {
-                        dic['above90']++;
+                        info[4]++;
                     } else if (result[i].grade >= 80) {
-                        dic['above80']++;
+                        info[3]++;
                     } else if (result[i].grade >= 70) {
-                        dic['above70']++;
+                        info[2]++;
                     } else if (result[i].grade >= 60) {
-                        dic['above60']++;
+                        info[1]++;
                     } else {
-                        dic['others']++;
+                        info[0]++;
                     }
                 }
-                res.send(dic);
             }
+            res.send(info);
         });
     });
 
