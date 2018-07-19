@@ -224,10 +224,13 @@ module.exports = function (app) {
     connection.query(sql, function (err, result) {
       if (err) {
         console.log('[SELECT ERROR] - ', err.message);
-        res.json({ restype: 'failed' });
-      }
-      else
-        res.json({ restype: 'success' });
+        res.json({
+          restype: 'failed'
+        });
+      } else
+        res.json({
+          restype: 'success'
+        });
       // console.log(data);
     });
   });
@@ -239,10 +242,13 @@ module.exports = function (app) {
     connection.query(sql, function (err, result) {
       if (err) {
         console.log('[SELECT ERROR] - ', err.message);
-        res.json({ restype: 'failed' });
-      }
-      else
-        res.json({ restype: 'success' });
+        res.json({
+          restype: 'failed'
+        });
+      } else
+        res.json({
+          restype: 'success'
+        });
       // console.log(data);
     });
   });
@@ -255,10 +261,13 @@ module.exports = function (app) {
     connection.query(sql, function (err, result) {
       if (err) {
         console.log('[SELECT ERROR] - ', err.message);
-        res.json({ restype: 'failed' });
-      }
-      else
-        res.json({ restype: 'success' });
+        res.json({
+          restype: 'failed'
+        });
+      } else
+        res.json({
+          restype: 'success'
+        });
       // console.log(data);
     });
   });
@@ -292,10 +301,13 @@ module.exports = function (app) {
     connection.query(sql, function (err) {
       if (err) {
         console.log('[SELECT ERROR] - ', err.message);
-        res.send({ restype: 'failed' });
-      }
-      else {
-        res.json({ restype: 'success' });
+        res.send({
+          restype: 'failed'
+        });
+      } else {
+        res.json({
+          restype: 'success'
+        });
       }
     });
   });
@@ -401,10 +413,13 @@ module.exports = function (app) {
     connection.query(sql, function (err) {
       if (err) {
         console.log('[SELECT ERROR] - ', err.message);
-        res.send({ restype: 'failed' });
-      }
-      else {
-        res.json({ restype: 'success' });
+        res.send({
+          restype: 'failed'
+        });
+      } else {
+        res.json({
+          restype: 'success'
+        });
       }
     });
   });
@@ -441,11 +456,14 @@ module.exports = function (app) {
     connection.query(sql, function (err) {
       if (err) {
         console.log('[SELECT ERROR] - ', err.message);
-        res.send({ restype: 'failed' });
+        res.send({
+          restype: 'failed'
+        });
         // return;
-      }
-      else {
-        res.json({restype: 'success'});
+      } else {
+        res.json({
+          restype: 'success'
+        });
       }
     });
   });
@@ -459,10 +477,13 @@ module.exports = function (app) {
     connection.query(sql, function (err, result) {
       if (err) {
         console.log('[SELECT ERROR] - ', err.message);
-        res.json({ restype: 'failed' });
-      }
-      else {
-        res.json({ restype: 'success' });
+        res.json({
+          restype: 'failed'
+        });
+      } else {
+        res.json({
+          restype: 'success'
+        });
       }
     });
   });
@@ -475,11 +496,14 @@ module.exports = function (app) {
     connection.query(sql, function (err) {
       if (err) {
         console.log('[SELECT ERROR] - ', err.message);
-        res.json({ restype: 'failed' });
+        res.json({
+          restype: 'failed'
+        });
         // return;
-      }
-      else
-        res.json({ restype: 'success' });
+      } else
+        res.json({
+          restype: 'success'
+        });
     });
   });
 
@@ -491,11 +515,14 @@ module.exports = function (app) {
     connection.query(sql, function (err) {
       if (err) {
         console.log('[SELECT ERROR] - ', err.message);
-        res.send({ restype: 'failed' });
+        res.send({
+          restype: 'failed'
+        });
         // return;
-      }
-      else
-        res.send({ restype: 'success' });
+      } else
+        res.send({
+          restype: 'success'
+        });
     });
   });
 
@@ -514,8 +541,7 @@ module.exports = function (app) {
         temp.sex = 'error';
         data.push(temp);
         res.send(data);
-      }
-      else {
+      } else {
         data = [];
         for (var i = 0; i < result.length; i++) {
           temp = new Object();
@@ -546,8 +572,7 @@ module.exports = function (app) {
         temp.sex = 'error';
         data.push(temp);
         res.send(data);
-      }
-      else {
+      } else {
         data = [];
         for (var i = 0; i < result.length; i++) {
           temp = new Object();
@@ -578,8 +603,7 @@ module.exports = function (app) {
         temp.semester = 'error';
         data.push(temp);
         res.send(data);
-      }
-      else {
+      } else {
         data = [];
         for (var i = 0; i < result.length; i++) {
           temp = new Object();

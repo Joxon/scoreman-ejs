@@ -26,13 +26,15 @@ app.use(cookieParser('my_cookie_secret'));
 app.use(express.static('./public'));
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(session({
-  secret: '123',            // 用来对session id相关的cookie进行签名
+  secret: '123', // 用来对session id相关的cookie进行签名
   saveUninitialized: false, // 是否自动保存未初始化的会话，建议false
-  resave: false,            // 是否每次都重新保存会话，建议false
+  resave: false, // 是否每次都重新保存会话，建议false
   cookie: {
-    maxAge: 60 * 60 * 1000       // 有效期，单位是毫秒
+    maxAge: 60 * 60 * 1000 // 有效期，单位是毫秒
   }
 }));
 
@@ -52,7 +54,7 @@ var allowCrossDomain = function (req, res, next) {
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type,Content-Length, Authorization, Accept,X-Requested-With');
   res.header('Access-Control-Allow-Credentials', 'true');
-  if (req.method == "OPTIONS") res.sendStatus(200);/*让options请求快速返回*/
+  if (req.method == "OPTIONS") res.sendStatus(200); /*让options请求快速返回*/
   else next();
 };
 app.use(allowCrossDomain);
@@ -83,51 +85,60 @@ app.put('/password', function (req, res) {
       if (err) {
         console.log('[SELECT ERROR] - ', err.message);
         // res.json({restype: 'failed'});
-        res.json({ restype: 'failed' });
-      }
-      else {
+        res.json({
+          restype: 'failed'
+        });
+      } else {
         // res.json({restype: 'success'});
         if (result.length > 0) {
           var pwd = result[0].password;
           // console.log(pwd);
           if (pwd != req.body.password_old)
-            res.json({ restype: 'failed' });
+            res.json({
+              restype: 'failed'
+            });
           else {
             sql = 'UPDATE teacher SET password = \'' + req.body.password_new + '\' WHERE tID = \'' + req.body.username + '\'';
             // console.log(sql);
             connection.query(sql, function (err, result) {
               if (err) {
                 console.log('[SELECT ERROR] - ', err.message);
-                res.json({ restype: 'failed' });
-              }
-              else {
-                res.json({ restype: 'success' });
+                res.json({
+                  restype: 'failed'
+                });
+              } else {
+                res.json({
+                  restype: 'success'
+                });
               }
               // console.log(data);
             });
           }
-        }
-        else {
-          res.json({ restype: 'failed' });
+        } else {
+          res.json({
+            restype: 'failed'
+          });
         }
       }
     });
-  }
-  else if (name[0] == 'S') {
+  } else if (name[0] == 'S') {
     // password judge
     var sql = 'SELECT password FROM student WHERE sID = \'' + req.body.username + '\'';
     connection.query(sql, function (err, result) {
       if (err) {
         console.log('[SELECT ERROR] - ', err.message);
         // res.json({restype: 'failed'});
-        res.json({ restype: 'failed' });
-      }
-      else {
+        res.json({
+          restype: 'failed'
+        });
+      } else {
         // res.json({restype: 'success'});
         if (result.length > 0) {
           var pwd = result[0].password;
           if (pwd != req.body.password_old)
-            res.json({ restype: 'failed' });
+            res.json({
+              restype: 'failed'
+            });
           else {
             sql = 'UPDATE student SET password = \'' + req.body.password_new + '\' WHERE sID = \'' + req.body.sID + '\'';
             // sql = 'UPDATE student SET password = \'' + req.body.password + '\' WHERE sID = \'' + req.signedcookies.username + '\'';
@@ -135,17 +146,21 @@ app.put('/password', function (req, res) {
             connection.query(sql, function (err, result) {
               if (err) {
                 console.log('[SELECT ERROR] - ', err.message);
-                res.json({ restype: 'failed' });
-              }
-              else {
-                res.json({ restype: 'success' });
+                res.json({
+                  restype: 'failed'
+                });
+              } else {
+                res.json({
+                  restype: 'success'
+                });
               }
               // console.log(data);
             });
           }
-        }
-        else {
-          res.json({ restype: 'failed' });
+        } else {
+          res.json({
+            restype: 'failed'
+          });
         }
       }
     });

@@ -3,31 +3,30 @@
 
 var mysql = require('mysql');
 var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : '123456',
-  database : 'stu_grade'
+  host: 'localhost',
+  user: 'root',
+  password: '123456',
+  database: 'stu_grade'
 });
 var data = [];
 
-module.exports = function(app){
+module.exports = function (app) {
 
-  app.get('/stu', function(req, res){
+  app.get('/stu', function (req, res) {
     // console.log(req.query);
     var sql = 'SELECT * FROM student WHERE sID = \'' + req.query.sID + '\'';
     // sql = 'SELECT * FROM student WHERE sID = \'' + req.signedcookies.username + '\'';
     // console.log(sql);
     connection.query(sql, function (err, result) {
-      if(err){
-        console.log('[SELECT ERROR] - ',err.message);
+      if (err) {
+        console.log('[SELECT ERROR] - ', err.message);
         temp = new Object();
         temp.sID = 'error';
         temp.sName = 'error';
         temp.classno = 'error';
         temp.sex = 'error';
         res.send(temp);
-      }
-      else{
+      } else {
         temp = new Object();
         temp.sID = result[0].sID;
         temp.sex = result[0].sex;
@@ -38,15 +37,15 @@ module.exports = function(app){
       // console.log(data);
     });
   });
-  app.post('/stu/take', function(req, res){
+  app.post('/stu/take', function (req, res) {
     // get take info
     // var sql = 'SELECT * FROM take NATURAL JOIN course WHERE sID = \'' + req.signedCookies.username + '\'';
     console.log(req.body);
     var sql = 'SELECT * FROM take NATURAL JOIN course WHERE sID = \'' + req.body.sID + '\'';
     // console.log(sql);
     connection.query(sql, function (err, result) {
-      if(err){
-        console.log('[SELECT ERROR] - ',err.message);
+      if (err) {
+        console.log('[SELECT ERROR] - ', err.message);
         data = [];
         temp = new Object();
         temp.cID = 'error';
@@ -54,11 +53,9 @@ module.exports = function(app){
         temp.grade = 'error';
         data.push(temp);
         res.send(data);
-      }
-      else{
+      } else {
         data = [];
-        for(var i = 0; i < result.length; i++)
-        {
+        for (var i = 0; i < result.length; i++) {
           temp = new Object();
           temp.cID = result[i].cID;
           temp.cName = result[i].cName;
@@ -72,23 +69,22 @@ module.exports = function(app){
     });
   });
 
-  app.post('/stu', function(req, res){
+  app.post('/stu', function (req, res) {
     // get student info
     // console.log(req.body);
     var sql = 'SELECT * FROM student WHERE sID = \'' + req.body.username + '\'';
     // sql = 'SELECT * FROM student WHERE sID = \'' + req.signedcookies.username + '\'';
     // console.log(sql);
     connection.query(sql, function (err, result) {
-      if(err){
-        console.log('[SELECT ERROR] - ',err.message);
+      if (err) {
+        console.log('[SELECT ERROR] - ', err.message);
         temp = new Object();
         temp.sID = 'error';
         temp.sName = 'error';
         temp.classno = 'error';
         temp.sex = 'error';
         res.send(temp);
-      }
-      else{
+      } else {
         temp = new Object();
         temp.sID = result[0].sID;
         temp.sex = result[0].sex;
