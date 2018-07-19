@@ -266,25 +266,36 @@ module.exports = function (app) {
   app.delete('/admin/course/:id', function (req, res) {
     // delete courese info
     // delete course
+    // var sql = 'DELETE FROM take WHERE cID = \'' + req.params.id + '\'';
+    // console.log(sql);
+    // connection.query(sql, function (err) {
+    //   if (err) {
+    //     console.log('[SELECT ERROR] - ', err.message);
+    //     res.send({ restype: 'failed' });
+    //   }
+    //   else {
+    //     // delete take
+    //     sql = 'DELETE FROM course WHERE cID = \'' + req.params.id + '\'';
+    //     console.log(sql);
+    //     connection.query(sql, function (err) {
+    //       if (err) {
+    //         console.log('[SELECT ERROR] - ', err.message);
+    //         res.send({ restype: 'failed' });
+    //       }
+    //       else
+    //         res.send({ restype: 'success' });
+    //     });
+    //   }
+    // });
     var sql = 'DELETE FROM course WHERE cID = \'' + req.params.id + '\'';
-    console.log(sql);
+    // console.log(sql);
     connection.query(sql, function (err) {
       if (err) {
         console.log('[SELECT ERROR] - ', err.message);
         res.send({ restype: 'failed' });
       }
       else {
-        // delete take
-        sql = 'DELETE FROM take WHERE cID = \'' + req.params.id + '\'';
-        console.log(sql);
-        connection.query(sql, function (err) {
-          if (err) {
-            console.log('[SELECT ERROR] - ', err.message);
-            res.send({ restype: 'failed' });
-          }
-          else
-            res.send({ restype: 'success' });
-        });
+        res.json({ restype: 'success' });
       }
     });
   });
@@ -293,103 +304,140 @@ module.exports = function (app) {
     // delete teacher info
 
     // delete take 
-    var t_cid;
-    var sql = 'SELECT cID FROM course WHERE tID = \'' + req.params.id + '\'';
-    console.log(sql);
-    connection.query(sql, function (err, result) {
+    // var t_cid;
+    // var sql = 'SELECT cID FROM course WHERE tID = \'' + req.params.id + '\'';
+    // console.log(sql);
+    // connection.query(sql, function (err, result) {
+    //   if (err) {
+    //     console.log('[SELECT ERROR] - ', err.message);
+    //     res.send({ restype: 'failed' });
+    //   }
+    //   else {
+    //     if (result.length >= 0) {
+    //       var flag = 1;
+    //       for (var i = 0; i <= result.length && result.length != 0; i++) {
+    //         // delete course
+    //         if (i == result.length) {
+    //           console.log('flag = ' + flag);
+    //           if (flag) { // delete course
+    //             sql = 'DELETE FROM course WHERE tID = \'' + req.params.id + '\'';
+    //             console.log(sql);
+    //             connection.query(sql, function (err) {
+    //               if (err) {
+    //                 console.log('[SELECT ERROR] - ', err.message);
+    //                 res.send({ restype: 'failed' });
+    //               }
+    //               else {
+    //                 // delete teacher
+    //                 sql = 'DELETE FROM teacher WHERE tID = \'' + req.params.id + '\'';
+    //                 console.log(sql);
+    //                 connection.query(sql, function (err) {
+    //                   if (err) {
+    //                     console.log('[SELECT ERROR] - ', err.message);
+    //                     res.send({ restype: 'failed' });
+    //                   }
+    //                   else
+    //                     res.send({ restype: 'success' });
+    //                 });
+    //               }
+    //             });
+    //           }
+    //           else {
+    //             res.json({ restype: 'failed' });
+    //           }
+    //         }
+    //         else {
+    //           t_cid = result[i].cID;
+    //           sql = 'DELETE FROM take WHERE cID = \'' + t_cid + '\'';
+    //           console.log(sql);
+    //           connection.query(sql, function (err) {
+    //             if (err) {
+    //               console.log('[SELECT ERROR] - ', err.message);
+    //               flag = 0;
+    //             }
+    //             // else
+    //             //   flag = 1;
+    //           });
+    //         }
+
+    //         // else{
+    //         //   res.json({ restype: 'failed' });
+    //         // }
+    //       }
+    //       if (result.length == 0) { // delete course
+    //         sql = 'DELETE FROM course WHERE tID = \'' + req.params.id + '\'';
+    //         console.log(sql);
+    //         connection.query(sql, function (err) {
+    //           if (err) {
+    //             console.log('[SELECT ERROR] - ', err.message);
+    //             res.send({ restype: 'failed' });
+    //           }
+    //           else {
+    //             // delete teacher
+    //             sql = 'DELETE FROM teacher WHERE tID = \'' + req.params.id + '\'';
+    //             console.log(sql);
+    //             connection.query(sql, function (err) {
+    //               if (err) {
+    //                 console.log('[SELECT ERROR] - ', err.message);
+    //                 res.send({ restype: 'failed' });
+    //               }
+    //               else
+    //                 res.send({ restype: 'success' });
+    //             });
+    //           }
+    //         });
+    //       }
+    //       else {
+    //         res.json({ restype: 'failed' });
+    //       }
+    //     }
+    //     else {
+    //       res.json({ restype: 'failed' })
+    //     }
+    //   }
+    // });
+    var sql = 'DELETE FROM teacher WHERE tID = \'' + req.params.id + '\'';
+    // console.log(sql);
+    connection.query(sql, function (err) {
       if (err) {
         console.log('[SELECT ERROR] - ', err.message);
         res.send({ restype: 'failed' });
       }
       else {
-        if (result.length >= 0) {
-          var flag = 0;
-          for (var i = 0; i < result.length; i++) {
-            // delete course
-            t_cid = result[i].cID;
-            sql = 'DELETE FROM take WHERE cID = \'' + t_cid + '\'';
-            console.log(sql);
-            connection.query(sql, function (err) {
-              if (err) {
-                console.log('[SELECT ERROR] - ', err.message);
-                flag = 0;
-              }
-              // else
-              //   flag = 1;
-            });
-            if (i + 1 == result.length) {
-              console.log('flag = ' + flag);
-              if (flag) { // delete course
-                sql = 'DELETE FROM course WHERE tID = \'' + req.params.id + '\'';
-                console.log(sql);
-                connection.query(sql, function (err) {
-                  if (err) {
-                    console.log('[SELECT ERROR] - ', err.message);
-                    res.send({ restype: 'failed' });
-                  }
-                  else {
-                    // delete teacher
-                    sql = 'DELETE FROM teacher WHERE tID = \'' + req.params.id + '\'';
-                    console.log(sql);
-                    connection.query(sql, function (err) {
-                      if (err) {
-                        console.log('[SELECT ERROR] - ', err.message);
-                        res.send({ restype: 'failed' });
-                      }
-                      else
-                        res.send({ restype: 'success' });
-                    });
-                  }
-                });
-              }
-              else {
-                res.json({ restype: 'failed' });
-              }
-            }
-            else{
-              res.json({ restype: 'failed' });
-            }
-          }
-          if (result.length == 0) { // delete course
-            sql = 'DELETE FROM course WHERE tID = \'' + req.params.id + '\'';
-            console.log(sql);
-            connection.query(sql, function (err) {
-              if (err) {
-                console.log('[SELECT ERROR] - ', err.message);
-                res.send({ restype: 'failed' });
-              }
-              else {
-                // delete teacher
-                sql = 'DELETE FROM teacher WHERE tID = \'' + req.params.id + '\'';
-                console.log(sql);
-                connection.query(sql, function (err) {
-                  if (err) {
-                    console.log('[SELECT ERROR] - ', err.message);
-                    res.send({ restype: 'failed' });
-                  }
-                  else
-                    res.send({ restype: 'success' });
-                });
-              }
-            });
-          }
-          else {
-            res.json({ restype: 'failed' });
-          }
-        }
-        else {
-          res.json({ restype: 'failed' })
-        }
+        res.json({ restype: 'success' });
       }
     });
   });
 
-
   app.delete('/admin/student/:id', function (req, res) {
     // delete student info
     // delete student
+    // var sql = 'DELETE FROM student WHERE sID = \'' + req.params.id + '\'';
+    // console.log(sql);
+    // connection.query(sql, function (err) {
+    //   if (err) {
+    //     console.log('[SELECT ERROR] - ', err.message);
+    //     res.send({ restype: 'failed' });
+    //     // return;
+    //   }
+    //   else {
+    //     // delete take
+    //     sql = 'DELETE FROM take WHERE sID = \'' + req.params.id + '\'';
+    //     console.log(sql);
+    //     connection.query(sql, function (err) {
+    //       if (err) {
+    //         console.log('[SELECT ERROR] - ', err.message);
+    //         res.send({ restype: 'failed' });
+    //         // return;
+    //       }
+    //       else {
+    //         res.send({ restype: 'success' });
+    //       }
+    //     });
+    //   }
+    // });
     var sql = 'DELETE FROM student WHERE sID = \'' + req.params.id + '\'';
-    console.log(sql);
+    // console.log(sql);
     connection.query(sql, function (err) {
       if (err) {
         console.log('[SELECT ERROR] - ', err.message);
@@ -397,19 +445,7 @@ module.exports = function (app) {
         // return;
       }
       else {
-        // delete take
-        sql = 'DELETE FROM take WHERE sID = \'' + req.params.id + '\'';
-        console.log(sql);
-        connection.query(sql, function (err) {
-          if (err) {
-            console.log('[SELECT ERROR] - ', err.message);
-            res.send({ restype: 'failed' });
-            // return;
-          }
-          else {
-            res.send({ restype: 'success' });
-          }
-        });
+        res.json({restype: 'success'});
       }
     });
   });

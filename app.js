@@ -26,26 +26,15 @@ app.use(cookieParser('my_cookie_secret'));
 app.use(express.static('./public'));
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ exrended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
   secret: '123',            // 用来对session id相关的cookie进行签名
   saveUninitialized: false, // 是否自动保存未初始化的会话，建议false
   resave: false,            // 是否每次都重新保存会话，建议false
   cookie: {
-    maxAge: 5 * 60 * 1000       // 有效期，单位是毫秒
+    maxAge: 60 * 60 * 1000       // 有效期，单位是毫秒
   }
 }));
-
-// 登陆拦截：
-app.use(function (req, res, next){
-  var url = req.originalUrl;
-  // console.log(req.session.user);
-  if (url != '/login' && !req.session.user) {
-    // res.status(500).json({ error: 'message' });
-    return res.redirect('/');
-  }
-  next();
-});
 
 // 跨域问题解决方法
 // app.use(cors({
@@ -54,19 +43,30 @@ app.use(function (req, res, next){
 //   alloweHeaders:['Content-Type', 'Authorization']
 // }));
 
-// var allowCrossDomain = function (req, res, next) {
-//   var originurl = 'http://' + req.hostname + ':3000';
-//   // var originurl = 'http://10.206.12.202:3000';
-//   // var originurl = 'http://localhost:8080';
-//   // console.log(originurl);
-//   res.header('Access-Control-Allow-Origin', originurl);
-//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-//   res.header('Access-Control-Allow-Headers', 'Content-Type,Content-Length, Authorization, Accept,X-Requested-With');
-//   res.header('Access-Control-Allow-Credentials', 'true');
-//   if (req.method == "OPTIONS") res.sendStatus(200);/*让options请求快速返回*/
-//   else next();
-// };
-// app.use(allowCrossDomain);
+var allowCrossDomain = function (req, res, next) {
+  // var originurl = 'http://' + req.hostname + ':3000';
+  // var originurl = 'http://10.206.12.202:3000';
+  var originurl = 'http://localhost:8080';
+  // console.log(originurl);
+  res.header('Access-Control-Allow-Origin', originurl);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type,Content-Length, Authorization, Accept,X-Requested-With');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  if (req.method == "OPTIONS") res.sendStatus(200);/*让options请求快速返回*/
+  else next();
+};
+app.use(allowCrossDomain);
+
+// 登陆拦截：
+// app.use(function (req, res, next){
+//   var url = req.originalUrl;
+//   // console.log('user : ' + req.session.user);
+//   if (url != '/login' && !req.session.user) {
+//     // res.status(500).json({ error: 'message' });
+//     return res.redirect('/');
+//   }
+//   next();
+// });
 
 login(app);
 admin(app);
